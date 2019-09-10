@@ -1,32 +1,70 @@
 # Intersog: Junior Python Developer task
+With this application you can check events that occures in your filesystem.
 
-Create an application for monitoring file system events in a certain directory. 
+## Getting Started
+You can use this application using pure Python 3 or using Docker.
 
-The app has to read config (e.g. `config.ini`, `settings.py`) and setup configurations.
-The application must detect events that occur in the file system. For example file or folder was created/deleted/changed.
-When event occurs -> certain Handler (registered in config) should be used to process that event. 
-It's up to you which handlers to implement. It can be anything (compiling/renaming/deleting...).
-Map handlers and patterns in the config file. 
+## An example of using an application
+Firstly you need to install some dependencies:
 
-##### Example: 
-`Workdir:`
-- `<filename1>.<file_extention_to_delete>` -> delete it
-- `<filename2>.c` -> compile it
-- `<filename3>.jpg` -> convert to .png
-- `<filename4>.doc` -> to .pdf
- 
-##### Requirements: 
-- application must not use all CPU time of one or more cores.
-- implement a minimum of 3 different event handlers. 
-- possibility to add or remove handlers.
- 
-##### Not required but will be a very big plus: 
-1. Daemonization of app process. +
-1. Concurrency. ++ 
-1. Docker containerization. ++ 
-1. Implement a module for notifying the user about events that have occured. +++ 
-1. Readme.md ++++ 
+```
+$ pip install watchdog
+```
+1. Clone this repository.
 
-### To submit your solution just push your code to this repo 😎
+2. Change settings in 'settings.py' :
 
-Happy coding! 😉
+```
+# Enter your path here
+PATH = "."  # Example "C:\\your_path\\"
+
+# Enter time format you want to display
+
+TIMEFORMAT = '%Y-%m-%d %H:%M:%S' #Default '%Y-%m-%d %H:%M:%S'
+
+# Select the type of events you want to display
+MOVED_FILES_OR_FOLDERS = True
+MODIFIED_FILES_OR_FOLDERS = True
+CREATED_FILES_OR_FOLDERS = True
+DELETED_FILES_OR_FOLDERS = True
+
+```
+
+3. Then just start app:
+```
+$ python eventobserver.py
+```
+
+## You can also use this application with docker
+
+1. Clone this repository.
+2. Change folders that you will be use in Dockerfile and settings.py.
+Dockerfile:
+```
+COPY . /app/
+WORKDIR /app/
+```
+settings.py:
+```
+PATH = "your_path"
+```
+3. Build the image:
+```
+$ docker build -t yourappname .
+```
+4. Run image:
+$ docker run yourappname
+5. To do some changes and to see how this application works, we need to connect to this docker session.
+For this open new terminal and type:
+```
+$ docker exec -i -t your_image_id /bin/bash
+```
+Where 'your_image_id' is an id of the image. You can find out it by typing:
+```
+$ docker ps
+```
+
+## Status
+Project is: _in progress_
+## Contact
+Email: Robert355335@gmail.com
